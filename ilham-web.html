@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammad Ilham Rafi - Web Developer Portfolio</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        'brand-red': '#E63946',
+                        'brand-blue': '#1D3557',
+                        'brand-orange': '#F4A261',
+                        'brand-dark': '#0F1115',
+                        'brand-card-dark': '#181A20',
+                        'brand-light': '#FAFAFC',
+                    },
+                    boxShadow: {
+                        'glow-red': '0 0 20px rgba(230, 57, 70, 0.25)',
+                        'glow-orange': '0 0 20px rgba(244, 162, 97, 0.25)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #FAFAFC;
+            color: #0F1115;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            cursor: none;
+        }
+
+        body.dark-mode {
+            background-color: #0F1115;
+            color: #FAFAFC;
+        }
+
+        /* Custom Animated Cursor */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #E63946;
+            position: fixed;
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.15s ease-in-out, transform 0.1s ease-out;
+        }
+
+        .cursor-outline {
+            width: 36px;
+            height: 36px;
+            border: 2px solid rgba(230, 57, 70, 0.6);
+            position: fixed;
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, border-color 0.2s, transform 0.15s ease-out;
+        }
+
+        body.dark-mode .cursor-dot {
+            background-color: #F4A261;
+        }
+        body.dark-mode .cursor-outline {
+            border-color: rgba(244, 162, 97, 0.6);
+        }
+
+        /* Hover states for Cursor */
+        .cursor-hover .cursor-outline {
+            width: 55px;
+            height: 55px;
+            background-color: rgba(230, 57, 70, 0.12);
+            border-color: #E63946;
+        }
+        
+        body.dark-mode .cursor-hover .cursor-outline {
+            background-color: rgba(244, 162, 97, 0.15);
+            border-color: #F4A261;
+        }
+
+        .cursor-click .cursor-outline {
+            transform: translate(-50%, -50%) scale(0.75);
+            border-color: #1D3557;
+            background-color: rgba(29, 53, 87, 0.3);
+        }
+
+        /* Nav links underline animation */
+        .nav-link {
+            position: relative;
+            text-transform: uppercase;
+            font-size: 0.8125rem;
+            letter-spacing: 0.12em;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -6px;
+            left: 0;
+            background-color: #E63946;
+            transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+
+        body.dark-mode .nav-link::after {
+            background-color: #F4A261;
+        }
+
+        .title-accent {
+            color: #E63946;
+            font-family: 'Playfair Display', serif;
+        }
+
+        body.dark-mode .title-accent {
+            color: #F4A261;
+        }
+
+        /* Hover image zoom effect */
+        .img-zoom-container {
+            overflow: hidden;
+            position: relative;
+        }
+        .img-zoom-container img {
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .img-zoom-container:hover img {
+            transform: scale(1.08);
+        }
+
+        /* Fallback standard cursor on touch devices */
+        @media (hover: none) and (pointer: coarse) {
+            body { cursor: auto; }
+            .cursor-dot, .cursor-outline { display: none !important; }
+        }
+
+        /* Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="antialiased font-sans selection:bg-brand-red selection:text-white dark:selection:bg-brand-orange dark:selection:text-brand-dark">
+
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-outline" id="cursorOutline"></div>
+
+    <header class="fixed w-full top-0 z-50 bg-brand-light/90 dark:bg-brand-dark/90 backdrop-blur-md border-b border-gray-200/80 dark:border-gray-800/80 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo Navigasi -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#home" class="font-extrabold text-2xl tracking-tight interactive-element text-brand-dark dark:text-brand-light flex items-center gap-1">
+                        ILHAM<span class="text-brand-red dark:text-brand-orange text-3xl leading-none">.</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation Menu -->
+                <nav class="hidden md:flex space-x-8 items-center">
+                    <a href="#home" class="nav-link active interactive-element text-brand-dark dark:text-brand-light">HOME</a>
+                    <a href="#cv" class="nav-link interactive-element text-brand-dark dark:text-brand-light">CV</a>
+                    <a href="#project" class="nav-link interactive-element text-brand-dark dark:text-brand-light">PROJECT</a>
+                    <a href="#about" class="nav-link interactive-element text-brand-dark dark:text-brand-light">ABOUT</a>
+                    <a href="#blog" class="nav-link interactive-element text-brand-dark dark:text-brand-light flex items-center gap-1.5 text-brand-red dark:text-brand-orange font-bold">
+                        <i class="fa-solid fa-star text-[10px]"></i> BLOG <i class="fa-solid fa-star text-[10px]"></i>
+                    </a>
+                    
+                    <!-- Theme Toggle Switch -->
+                    <button id="themeToggle" class="interactive-element ml-4 p-2.5 rounded-full hover:bg-gray-200/60 dark:hover:bg-gray-800/60 transition-colors text-brand-dark dark:text-brand-light" aria-label="Toggle Theme">
+                        <i class="fa-solid fa-moon text-lg dark:hidden" id="moonIcon"></i>
+                        <i class="fa-solid fa-sun text-lg hidden dark:block text-brand-orange" id="sunIcon"></i>
+                    </button>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center gap-2">
+                    <button id="mobileThemeToggle" class="p-2 text-brand-dark dark:text-brand-light">
+                        <i class="fa-solid fa-moon text-lg dark:hidden"></i>
+                        <i class="fa-solid fa-sun text-lg hidden dark:block text-brand-orange"></i>
+                    </button>
+                    <button id="mobileMenuBtn" class="interactive-element text-brand-dark dark:text-brand-light p-2 focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-brand-light dark:bg-brand-dark border-b border-gray-200 dark:border-gray-800 transition-all">
+            <div class="px-4 pt-3 pb-6 space-y-3">
+                <a href="#home" class="block py-2 text-base font-semibold text-brand-dark dark:text-brand-light mobile-link">HOME</a>
+                <a href="#cv" class="block py-2 text-base font-semibold text-brand-dark dark:text-brand-light mobile-link">CV</a>
+                <a href="#project" class="block py-2 text-base font-semibold text-brand-dark dark:text-brand-light mobile-link">PROJECT</a>
+                <a href="#about" class="block py-2 text-base font-semibold text-brand-dark dark:text-brand-light mobile-link">ABOUT</a>
+                <a href="#blog" class="block py-2 text-base font-bold text-brand-red dark:text-brand-orange mobile-link">★ BLOG ★</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-20">
+        
+        <section id="home" class="min-h-screen flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+            <!-- Background Glow Elements -->
+            <div class="absolute top-20 right-10 w-96 h-96 bg-brand-red/10 rounded-full blur-3xl -z-10 dark:bg-brand-orange/10 pointer-events-none"></div>
+            <div class="absolute bottom-10 left-10 w-96 h-96 bg-brand-blue/15 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+
+            <div class="max-w-6xl mx-auto w-full reveal active">
+                
+                <!-- Section Headline Styled Like Reference -->
+                <div class="text-center mb-12">
+                    <span class="text-xs uppercase tracking-[0.3em] font-bold text-gray-500 dark:text-gray-400 block mb-2">Web Developer Portfolio</span>
+                    <h1 class="text-4xl sm:text-6xl md:text-7xl font-serif tracking-tight text-brand-dark dark:text-brand-light leading-none">
+                        MORE ON <span class="title-accent uppercase">MUHAMMAD ILHAM RAFI</span>
+                    </h1>
+                </div>
+
+                <!-- Profile Info & Image Grid Layout -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-10 items-center justify-center">
+                    
+                    <!-- Text Introduction -->
+                    <div class="md:col-span-7 space-y-6 text-gray-800 dark:text-gray-200">
+                        <p class="text-lg md:text-xl font-light leading-relaxed">
+                            Halo! Saya <strong class="font-bold text-brand-dark dark:text-white">Muhammad Ilham Rafi</strong>, seorang <strong class="text-brand-red dark:text-brand-orange font-semibold">Web Developer</strong> berusia <span class="font-semibold text-brand-dark dark:text-white">17 tahun</span> dan <span class="underline decoration-brand-red/50 dark:decoration-brand-orange/50">Fresh Graduate</span> lulusan jurusan <strong>Software Developer and Games</strong>.
+                        </p>
+                        
+                        <p class="text-base text-gray-600 dark:text-gray-400 leading-relaxed">
+                            Lahir di <strong>Pekanbaru</strong> dan saat ini menetap di <strong>Karangrejo, Gajahmungkur, Semarang Selatan</strong>. Memiliki passion mendalam dalam membangun aplikasi web modern, antarmuka interaktif, dan pengalaman digital yang responsif.
+                        </p>
+
+                        <!-- Achievement Card -->
+                        <div class="bg-white dark:bg-brand-card-dark p-5 rounded-2xl border border-gray-200/80 dark:border-gray-800 shadow-sm relative overflow-hidden border-l-4 border-l-brand-red dark:border-l-brand-orange">
+                            <div class="flex items-start gap-3">
+                                <div class="p-2.5 bg-amber-500/10 text-amber-500 rounded-xl mt-1">
+                                    <i class="fa-solid fa-trophy text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-brand-dark dark:text-white text-sm">Pencapaian & Portofolio Awal</h4>
+                                    <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1">
+                                        Pernah membuat website portofolio tanpa coding secara gratis di <a href="https://portofolio-cph.pages.dev" target="_blank" class="text-brand-blue dark:text-blue-400 font-semibold hover:underline interactive-element">portofolio-cph.pages.dev</a> dan berhasil menembus <strong>Semifinal Young Codes World Cup</strong> yang diselenggarakan oleh <strong>Timedoor Academy</strong>.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons & GitHub Link -->
+                        <div class="pt-2 flex flex-wrap items-center gap-4">
+                            <a href="https://github.com/ilham-rafi-dev" target="_blank" class="inline-flex items-center gap-2.5 px-6 py-3.5 bg-brand-dark text-white dark:bg-brand-light dark:text-brand-dark font-semibold rounded-xl hover:bg-brand-blue dark:hover:bg-gray-200 transition-all shadow-md interactive-element">
+                                <i class="fa-brands fa-github text-xl"></i> GitHub Saya
+                            </a>
+                            <a href="#project" class="inline-flex items-center gap-2 px-6 py-3.5 border border-brand-dark dark:border-white text-brand-dark dark:text-white font-semibold rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-all interactive-element">
+                                Lihat Semua Project <i class="fa-solid fa-arrow-down text-xs ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Profile Image with Realistic Google/Unsplash Sample -->
+                    <div class="md:col-span-5 flex justify-center">
+                        <div class="relative group">
+                            <!-- Background Accent Frame -->
+                            <div class="absolute -inset-2 bg-gradient-to-r from-brand-red to-brand-blue dark:from-brand-orange dark:to-brand-blue rounded-2xl blur-sm opacity-40 group-hover:opacity-75 transition duration-500"></div>
+                            
+                            <div class="img-zoom-container relative w-72 h-80 sm:w-80 sm:h-96 rounded-2xl shadow-2xl bg-gray-900 border border-gray-200 dark:border-gray-800 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=800&q=80" alt="Muhammad Ilham Rafi" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                                <div class="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black/80 via-black/40 to-transparent text-white">
+                                    <p class="font-bold text-sm">Muhammad Ilham Rafi</p>
+                                    <p class="text-xs text-gray-300">Web Developer • Semarang</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4 Photo Project Preview Showcase Grid -->
+                <div class="mt-20 pt-10 border-t border-gray-200 dark:border-gray-800">
+                    <div class="flex justify-between items-end mb-6">
+                        <div>
+                            <h3 class="text-xs uppercase tracking-widest font-extrabold text-brand-red dark:text-brand-orange">Sekilas Karya</h3>
+                            <p class="text-xl font-serif text-brand-dark dark:text-brand-light">4 Contoh Highlight Project</p>
+                        </div>
+                        <a href="#project" class="text-xs font-bold uppercase tracking-wider text-brand-blue dark:text-blue-400 hover:underline interactive-element">Selengkapnya &rarr;</a>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <!-- Preview Card 1 -->
+                        <a href="#project" class="group img-zoom-container rounded-xl overflow-hidden shadow-sm h-48 bg-gray-800 block relative interactive-element">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" alt="Web Dashboard App" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-3 text-white">
+                                <span class="text-[10px] font-bold text-brand-orange uppercase">Web App</span>
+                                <span class="text-xs font-bold">Dashboard Admin Web</span>
+                            </div>
+                        </a>
+                        <!-- Preview Card 2 -->
+                        <a href="#project" class="group img-zoom-container rounded-xl overflow-hidden shadow-sm h-48 bg-gray-800 block relative interactive-element">
+                            <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80" alt="Space Explorer 2D Game" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-3 text-white">
+                                <span class="text-[10px] font-bold text-brand-red uppercase">Game Dev</span>
+                                <span class="text-xs font-bold">Space Explorer 2D</span>
+                            </div>
+                        </a>
+                        <!-- Preview Card 3 -->
+                        <a href="#project" class="group img-zoom-container rounded-xl overflow-hidden shadow-sm h-48 bg-gray-800 block relative interactive-element">
+                            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" alt="No-Code Portfolio Web" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-3 text-white">
+                                <span class="text-[10px] font-bold text-brand-orange uppercase">No-Code</span>
+                                <span class="text-xs font-bold">portofolio-cph.pages.dev</span>
+                            </div>
+                        </a>
+                        <!-- Preview Card 4 -->
+                        <a href="#project" class="group img-zoom-container rounded-xl overflow-hidden shadow-sm h-48 bg-gray-800 block relative interactive-element">
+                            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80" alt="Interactive Web UI" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-3 text-white">
+                                <span class="text-[10px] font-bold text-blue-400 uppercase">Frontend</span>
+                                <span class="text-xs font-bold">Landing Page & Animation</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="cv" class="py-24 bg-white dark:bg-brand-card-dark/60 border-t border-gray-200/80 dark:border-gray-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+                
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-xs uppercase tracking-widest font-extrabold text-brand-red dark:text-brand-orange">Berkas & Kualifikasi</span>
+                    <h2 class="text-3xl md:text-5xl font-serif mt-1 title-accent uppercase">CURRICULUM VITAE & PORTOFOLIO</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mt-3 text-sm md:text-base">
+                        Dokumen resmi Curriculum Vitae, transkrip kualifikasi Software Developer and Games, serta sertifikat pendukung.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <!-- CV Card -->
+                    <div class="bg-brand-light dark:bg-brand-dark rounded-2xl p-6 border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="img-zoom-container h-48 rounded-xl overflow-hidden mb-5 bg-gray-200 dark:bg-gray-800 relative">
+                                <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=800&q=80" alt="CV Resume Preview" class="w-full h-full object-cover">
+                                <span class="absolute top-3 right-3 bg-brand-dark text-white text-[10px] font-bold px-2.5 py-1 rounded-md uppercase">PDF</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-brand-dark dark:text-white mb-2">Curriculum Vitae (CV)</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                                Dokumen CV lengkap berisi riwayat pendidikan, keahlian coding (HTML/CSS/JS, React, Unity C#), serta profil diri Ilham.
+                            </p>
+                        </div>
+                        <a href="https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=1200&q=80" target="_blank" class="inline-flex items-center justify-between w-full px-4 py-2.5 bg-brand-blue text-white rounded-xl text-sm font-semibold hover:bg-blue-900 transition-colors interactive-element">
+                            <span>Buka Dokumen CV</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </a>
+                    </div>
+
+                    <!-- Sertifikat Young Codes World Cup Card -->
+                    <div class="bg-brand-light dark:bg-brand-dark rounded-2xl p-6 border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="img-zoom-container h-48 rounded-xl overflow-hidden mb-5 bg-gray-200 dark:bg-gray-800 relative">
+                                <img src="https://images.unsplash.com/photo-1589330694653-ded6df03f754?auto=format&fit=crop&w=800&q=80" alt="Sertifikat Semifinalist" class="w-full h-full object-cover">
+                                <span class="absolute top-3 right-3 bg-brand-orange text-brand-dark text-[10px] font-bold px-2.5 py-1 rounded-md uppercase">Sertifikat</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-brand-dark dark:text-white mb-2">Sertifikat Semifinalist</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                                Penghargaan Semifinalist dalam ajang <strong>Young Codes World Cup</strong> yang diselenggarakan oleh <strong>Timedoor Academy</strong>.
+                            </p>
+                        </div>
+                        <a href="https://images.unsplash.com/photo-1589330694653-ded6df03f754?auto=format&fit=crop&w=1200&q=80" target="_blank" class="inline-flex items-center justify-between w-full px-4 py-2.5 bg-brand-blue text-white rounded-xl text-sm font-semibold hover:bg-blue-900 transition-colors interactive-element">
+                            <span>Lihat Sertifikat</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </a>
+                    </div>
+
+                    <!-- Transkrip / Kelulusan Card -->
+                    <div class="bg-brand-light dark:bg-brand-dark rounded-2xl p-6 border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="img-zoom-container h-48 rounded-xl overflow-hidden mb-5 bg-gray-200 dark:bg-gray-800 relative">
+                                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80" alt="Ijazah & Transkrip" class="w-full h-full object-cover">
+                                <span class="absolute top-3 right-3 bg-brand-red text-white text-[10px] font-bold px-2.5 py-1 rounded-md uppercase">Lulusan</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-brand-dark dark:text-white mb-2">Transkrip & Sertifikat Kelulusan</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                                Bukti akademis kelulusan bidang keahlian Software Developer and Games dengan hasil memuaskan.
+                            </p>
+                        </div>
+                        <a href="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80" target="_blank" class="inline-flex items-center justify-between w-full px-4 py-2.5 bg-brand-blue text-white rounded-xl text-sm font-semibold hover:bg-blue-900 transition-colors interactive-element">
+                            <span>Lihat Transkrip Nilai</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="project" class="py-24 bg-gray-100/70 dark:bg-brand-dark/90">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+                
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-xs uppercase tracking-widest font-extrabold text-brand-red dark:text-brand-orange">Portofolio Karya & Proyek</span>
+                    <h2 class="text-3xl md:text-5xl font-serif mt-1 title-accent uppercase">PROJECT DILAKUKAN</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mt-3 text-sm md:text-base">
+                        Detail proyek pengembangan website, game 2D, dan pengerjaan aplikasi interaktif lengkap dengan media gambar, video, deskripsi kegiatan, dan tautan langsung.
+                    </p>
+                </div>
+
+                <div class="space-y-16">
+                    
+                    <!-- Project Item 1: Web Development App -->
+                    <div class="bg-white dark:bg-brand-card-dark rounded-3xl overflow-hidden border border-gray-200 dark:border-gray-800 shadow-md grid grid-cols-1 lg:grid-cols-12 gap-0">
+                        <div class="lg:col-span-7 img-zoom-container bg-gray-900 relative min-h-[300px]">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=80" alt="Web Application Project" class="w-full h-full object-cover">
+                            <div class="absolute top-4 left-4 bg-brand-red text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                                Web Application
+                            </div>
+                        </div>
+                        <div class="lg:col-span-5 p-8 flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-2xl font-bold text-brand-dark dark:text-white mb-3">Modern Interactive Web Dashboard</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+                                    <strong>Kegiatan yang dilakukan:</strong> Merancang antarmuka pengguna (UI/UX), menulis logika frontend menggunakan JavaScript modern, serta mengimplementasikan desain responsif berbasis Tailwind CSS agar lancar di layar mobile maupun desktop.
+                                </p>
+                                <div class="flex flex-wrap gap-2 mb-6">
+                                    <span class="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-semibold rounded-lg text-brand-blue dark:text-blue-300">HTML5 / CSS3</span>
+                                    <span class="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-semibold rounded-lg text-brand-blue dark:text-blue-300">Tailwind CSS</span>
+                                    <span class="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-semibold rounded-lg text-brand-blue dark:text-blue-300">JavaScript ES6</span>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 pt-4 border-t border-gray-100 dark:border-gray-800">
+                                <a href="https://github.com/ilham-rafi-dev" target="_blank" class="flex-1 text-center py-2.5 bg-brand-dark text-white dark:bg-brand-light dark:text-brand-dark rounded-xl text-sm font-semibold hover:bg-brand-blue dark:hover:bg-gray-200 transition-colors interactive-element">
+                                    <i class="fa-brands fa-github mr-2"></i> Source Code
+                                </a>
+                                <a href="https://portofolio-cph.pages.dev" target="_blank" class="flex-1 text-center py-2.5 border border-brand-dark dark:border-white text-brand-dark dark:text-white rounded-xl text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors interactive-element">
+                                    <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> Live Demo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Item 2: Game Development with Video Trailer Showcase -->
+                    <div class="bg-white dark:bg-brand-card-dark rounded-3xl overflow-hidden border border-gray-200 dark:border-gray-800 shadow-md grid grid-cols-1 lg:grid-cols-12 gap-0">
+                        <div class="lg:col-span-7 bg-gray-900 relative min-h-[300px] flex items-center justify-center group overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1000&q=80" alt="Space Explorer 2D Game" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90">
+                            <!-- Play Overlay representing Video Content -->
+                            <a href="https://www.youtube.com" target="_blank" class="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-black/20 transition-all interactive-element group">
+                                <div class="w-16 h-16 bg-brand-red text-white rounded-full flex items-center justify-center shadow-glow-red group-hover:scale-110 transition-transform">
+                                    <i class="fa-solid fa-play text-xl ml-1"></i>
+                                </div>
+                            </a>
+                            <div class="absolute top-4 left-4 bg-brand-orange text-brand-dark text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                                Game Development (Video Available)
+                            </div>
+                        </div>
+                        <div class="lg:col-span-5 p-8 flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-2xl font-bold text-brand-dark dark:text-white mb-3">Space Explorer 2D Platformer Game</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+                                    <strong>Kegiatan yang dilakukan:</strong> Merancang mekanisme pergerakan karakter player, sistem deteksi tabrakan (collision detection), pengumpulan poin, dan animasi visual rintangan menggunakan Unity Engine dan C#.
+                                </p>
+                                <div class="flex flex-wrap gap-2 mb-6">
+                                    <span class="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-semibold rounded-lg text-brand-orange">Unity Engine</span>
+                                    <span class="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-semibold rounded-lg text-brand-orange">C# Scripting</span>
+                                    <span class="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-semibold rounded-lg text-brand-orange">2D Pixel Art</span>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 pt-4 border-t border-gray-100 dark:border-gray-800">
+                                <a href="https://youtube.com" target="_blank" class="flex-1 text-center py-2.5 bg-red-600 text-white rounded-xl text-sm font-semibold hover:bg-red-700 transition-colors interactive-element">
+                                    <i class="fa-brands fa-youtube mr-2"></i> Tonton Trailer
+                                </a>
+                                <a href="https://github.com/ilham-rafi-dev" target="_blank" class="flex-1 text-center py-2.5 border border-brand-dark dark:border-white text-brand-dark dark:text-white rounded-xl text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors interactive-element">
+                                    <i class="fa-solid fa-file-code mr-1"></i> File Project
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Item 3: No-Code Winner Web -->
+                    <div class="bg-white dark:bg-brand-card-dark rounded-3xl overflow-hidden border border-gray-200 dark:border-gray-800 shadow-md grid grid-cols-1 lg:grid-cols-12 gap-0">
+                        <div class="lg:col-span-7 img-zoom-container bg-gray-900 relative min-h-[300px]">
+                            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1000&q=80" alt="No-Code Web Project" class="w-full h-full object-cover">
+                            <div class="absolute top-4 left-4 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1.5">
+                                <i class="fa-solid fa-trophy"></i> Semifinalist Project
+                            </div>
+                        </div>
+                        <div class="lg:col-span-5 p-8 flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-2xl font-bold text-brand-dark dark:text-white mb-3">No-Code Free Portfolio Page</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+                                    <strong>Kegiatan yang dilakukan:</strong> Merancang arsitektur halaman portofolio interaktif tanpa coding, mengkonfigurasi domain gratis di Cloudflare Pages, serta mengoptimalkan performa akses untuk kompetisi Young Codes World Cup Timedoor Academy.
+                                </p>
+                                <div class="flex flex-wrap gap-2 mb-6">
+                                    <span class="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-semibold rounded-lg text-amber-500">Cloudflare Pages</span>
+                                    <span class="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-semibold rounded-lg text-amber-500">No-Code Builder</span>
+                                </div>
+                            </div>
+                            <div class="pt-4 border-t border-gray-100 dark:border-gray-800">
+                                <a href="https://portofolio-cph.pages.dev" target="_blank" class="block w-full text-center py-2.5 bg-brand-blue text-white rounded-xl text-sm font-semibold hover:bg-blue-900 transition-colors interactive-element">
+                                    <i class="fa-solid fa-globe mr-2"></i> Buka Website (portofolio-cph.pages.dev)
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-24 bg-white dark:bg-brand-dark border-t border-gray-200/80 dark:border-gray-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Left Images Grid Column -->
+                    <div class="lg:col-span-6 grid grid-cols-2 gap-4">
+                        <div class="img-zoom-container rounded-2xl overflow-hidden h-64 bg-gray-200 dark:bg-gray-800 shadow-md">
+                            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80" alt="Coding Workspace" class="w-full h-full object-cover">
+                        </div>
+                        <div class="img-zoom-container rounded-2xl overflow-hidden h-64 bg-gray-200 dark:bg-gray-800 shadow-md mt-6">
+                            <img src="https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?auto=format&fit=crop&w=800&q=80" alt="Game Development Setup" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+
+                    <!-- Right Information Text -->
+                    <div class="lg:col-span-6 space-y-6">
+                        <span class="text-xs uppercase tracking-widest font-extrabold text-brand-red dark:text-brand-orange">Tentang Diri Saya</span>
+                        <h2 class="text-3xl md:text-5xl font-serif title-accent uppercase">ABOUT ILHAM</h2>
+                        
+                        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                            Lahir di Pekanbaru dan tumbuh besar hingga kini bertempat tinggal di Karangrejo, Gajahmungkur, Semarang Selatan, saya telah tertarik pada dunia teknologi sejak usia dini.
+                        </p>
+                        
+                        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                            Sebagai lulusan jurusan <strong class="text-brand-dark dark:text-white">Software Developer and Games</strong> yang baru saja lulus (fresh graduate) di usia 17 tahun, saya terus mengasah skill menulis kode web modern (HTML, CSS, JavaScript, Framework) serta pemrograman game interaktif.
+                        </p>
+
+                        <div class="p-4 bg-gray-50 dark:bg-brand-card-dark rounded-2xl border border-gray-200 dark:border-gray-800 space-y-3">
+                            <div class="flex items-center gap-3">
+                                <i class="fa-solid fa-location-dot text-brand-red dark:text-brand-orange text-lg"></i>
+                                <span class="text-sm text-gray-800 dark:text-gray-200"><strong>Lokasi:</strong> Karangrejo, Gajahmungkur, Semarang Selatan</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fa-solid fa-cake-candles text-brand-blue text-lg"></i>
+                                <span class="text-sm text-gray-800 dark:text-gray-200"><strong>Umur:</strong> 17 Tahun</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fa-solid fa-graduation-cap text-brand-orange text-lg"></i>
+                                <span class="text-sm text-gray-800 dark:text-gray-200"><strong>Status:</strong> Fresh Graduate Web & Game Developer</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer id="blog" class="bg-brand-dark text-white pt-20 pb-12 border-t-4 border-brand-red dark:border-brand-orange relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
+                
+                <!-- Blog Header & Social Links -->
+                <div class="md:col-span-7 space-y-6">
+                    <h2 class="text-3xl font-serif text-brand-orange flex items-center gap-2">
+                        <i class="fa-solid fa-star text-sm"></i> BLOG & MEDIA DIGITAL <i class="fa-solid fa-star text-sm"></i>
+                    </h2>
+                    <p class="text-gray-400 text-sm md:text-base max-w-lg leading-relaxed">
+                        Temukan konten pengembangan web, update proyek terbaru, serta saluran sosial media saya di bawah ini:
+                    </p>
+                    
+                    <!-- Social Buttons -->
+                    <div class="flex flex-wrap gap-4 pt-2">
+                        <a href="https://youtube.com" target="_blank" class="flex items-center gap-2.5 bg-gray-800/90 hover:bg-red-600 px-5 py-3 rounded-xl transition-all interactive-element font-semibold text-sm">
+                            <i class="fa-brands fa-youtube text-xl"></i> YouTube
+                        </a>
+                        <a href="https://instagram.com" target="_blank" class="flex items-center gap-2.5 bg-gray-800/90 hover:bg-gradient-to-r hover:from-purple-600 hover:to-pink-600 px-5 py-3 rounded-xl transition-all interactive-element font-semibold text-sm">
+                            <i class="fa-brands fa-instagram text-xl"></i> Instagram
+                        </a>
+                        <a href="https://github.com/ilham-rafi-dev" target="_blank" class="flex items-center gap-2.5 bg-gray-800/90 hover:bg-gray-700 px-5 py-3 rounded-xl transition-all interactive-element font-semibold text-sm">
+                            <i class="fa-brands fa-github text-xl"></i> GitHub
+                        </a>
+                    </div>
+
+                    <!-- Salin Link Website Element -->
+                    <div class="p-5 bg-gray-900/90 rounded-2xl border border-gray-800 max-w-md mt-6">
+                        <label class="text-xs uppercase tracking-wider text-gray-400 font-bold block mb-2">Bagikan Website Portofolio Ini:</label>
+                        <div class="flex items-center gap-2">
+                            <input type="text" id="webUrl" value="https://ilhamrafi-portfolio.com" readonly class="bg-gray-950 text-sm text-gray-300 px-3.5 py-2.5 rounded-xl border border-gray-800 focus:outline-none w-full">
+                            <button id="copyBtn" class="bg-brand-red hover:bg-red-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-colors interactive-element flex items-center gap-2 shrink-0">
+                                <i class="fa-regular fa-copy"></i> Salin Link
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email & Contact Section -->
+                <div class="md:col-span-5 bg-gray-900/60 p-8 rounded-3xl border border-gray-800 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-3">Kirim Pesan Email</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                            Tertarik untuk berkolaborasi, menawarkan pekerjaan web development, atau memiliki pertanyaan?
+                        </p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <a href="mailto:muhammadilhamrafi.work@gmail.com" class="block w-full text-center bg-brand-light text-brand-dark hover:bg-brand-orange hover:text-brand-dark px-6 py-3.5 rounded-xl font-bold transition-all interactive-element shadow-lg">
+                            <i class="fa-regular fa-envelope mr-2"></i> Kirim Email ke Ilham
+                        </a>
+                        <p class="text-center text-xs text-gray-500">
+                            Email Contoh: muhammadilhamrafi.work@gmail.com
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Footer Copyright -->
+            <div class="border-t border-gray-800 pt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500">
+                <p>&copy; 2026 Muhammad Ilham Rafi. Hak Cipta Dilindungi.</p>
+                <p class="mt-2 sm:mt-0">Karangrejo, Gajahmungkur, Semarang Selatan</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="customAlert" class="fixed bottom-6 right-6 bg-emerald-600 text-white px-6 py-3.5 rounded-xl shadow-glow-red transform translate-y-24 opacity-0 transition-all duration-300 z-50 flex items-center gap-3">
+        <i class="fa-solid fa-check-circle text-lg"></i>
+        <span id="alertMessage" class="text-sm font-semibold">Link berhasil disalin ke clipboard!</span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Custom Animated Trailing Cursor
+            const dot = document.getElementById('cursorDot');
+            const outline = document.getElementById('cursorOutline');
+            
+            let mouseX = 0, mouseY = 0;
+            let outlineX = 0, outlineY = 0;
+
+            window.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+
+                dot.style.left = `${mouseX}px`;
+                dot.style.top = `${mouseY}px`;
+            });
+
+            function animateCursor() {
+                outlineX += (mouseX - outlineX) * 0.2;
+                outlineY += (mouseY - outlineY) * 0.2;
+
+                outline.style.left = `${outlineX}px`;
+                outline.style.top = `${outlineY}px`;
+
+                requestAnimationFrame(animateCursor);
+            }
+            animateCursor();
+
+            // Hover and click animations for interactables
+            const interactiveEls = document.querySelectorAll('.interactive-element, a, button, input');
+            interactiveEls.forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+            });
+
+            document.addEventListener('mousedown', () => document.body.classList.add('cursor-click'));
+            document.addEventListener('mouseup', () => document.body.classList.remove('cursor-click'));
+
+            // 2. Dark / Light Theme Toggle
+            const html = document.documentElement;
+            const body = document.body;
+            const themeToggleBtn = document.getElementById('themeToggle');
+            const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+
+            function toggleTheme() {
+                html.classList.toggle('dark');
+                body.classList.toggle('dark-mode');
+            }
+
+            themeToggleBtn.addEventListener('click', toggleTheme);
+            mobileThemeToggle.addEventListener('click', toggleTheme);
+
+            // 3. Mobile Navigation Drawer Toggle
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // 4. Scroll Active Anchor Highlight
+            const sections = document.querySelectorAll('section, footer');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            window.addEventListener('scroll', () => {
+                let currentSection = '';
+                const scrollY = window.pageYOffset;
+
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 200;
+                    if (scrollY >= sectionTop) {
+                        currentSection = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${currentSection}`) {
+                        link.classList.add('active');
+                    }
+                });
+
+                // Scroll Reveal
+                revealElements();
+            });
+
+            // 5. Scroll Reveal Animation Logic
+            const reveals = document.querySelectorAll('.reveal');
+            function revealElements() {
+                const windowHeight = window.innerHeight;
+                reveals.forEach(el => {
+                    const elTop = el.getBoundingClientRect().top;
+                    if (elTop < windowHeight - 100) {
+                        el.classList.add('active');
+                    }
+                });
+            }
+            revealElements();
+
+            // 6. Copy Web Link Functionality
+            const copyBtn = document.getElementById('copyBtn');
+            const webUrlInput = document.getElementById('webUrl');
+            const customAlert = document.getElementById('customAlert');
+
+            // Set current URL dynamically
+            webUrlInput.value = window.location.href;
+
+            copyBtn.addEventListener('click', () => {
+                webUrlInput.select();
+                webUrlInput.setSelectionRange(0, 99999);
+
+                try {
+                    document.execCommand('copy');
+                    showToast('Link website berhasil disalin!');
+                } catch (err) {
+                    showToast('Gagal menyalin link.');
+                }
+
+                window.getSelection().removeAllRanges();
+            });
+
+            function showToast(msg) {
+                document.getElementById('alertMessage').innerText = msg;
+                customAlert.classList.remove('translate-y-24', 'opacity-0');
+                setTimeout(() => {
+                    customAlert.classList.add('translate-y-24', 'opacity-0');
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>
