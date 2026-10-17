@@ -9,52 +9,62 @@
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="logo-section">
-            <div class="logo-icon">MI</div>
-            <span class="logo-text">Muhammad <b>Ilham</b> Rafi</span>
-        </div>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="#" class="active">About Me</a></li>
-            <li><a href="#">My Portfolio</a></li>
-            <li><a href="#">Testimonials</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
-    </nav>
+    <div class="navbar-container">
+        <nav class="navbar">
+            <div class="logo-section">
+                <div class="logo-icon">MI</div>
+                <span class="logo-text">Muhammad <b>Ilham</b> Rafi</span>
+            </div>
+            
+            <button class="hamburger" id="hamburger-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html" class="active">About Me</a></li>
+                <li><a href="#">My Portfolio</a></li>
+                <li><a href="#">Testimonials</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
 
     <main class="about-section">
         <div class="bg-pattern"></div>
         
-        <!-- Bintang Dekorasi -->
         <div class="decor-star star-1">✦</div>
         <div class="decor-star star-2">✦</div>
 
         <div class="about-container">
             
-            <!-- Kolom Kiri: Teks -->
             <div class="about-text-content">
                 <div class="section-tag">Di Balik Layar</div>
-                <h2 class="about-heading">Merajut piksel menjadi pengalaman web yang <span>menyenangkan.</span></h2>
+                <h2 class="about-heading"><span>About Me:</span></h2>
                 
                 <p class="about-desc">
-                    Halo! Saya <strong>Muhammad Ilham Rafi</strong>, seorang Frontend Developer yang berbasis di Indonesia. Saya memiliki semangat yang tinggi dalam menerjemahkan desain UI/UX yang statis menjadi kode yang bersih, fungsional, dan hidup di layar perangkat Anda.
+                    Halo! Saya <strong>Muhammad Ilham Rafi</strong>, seorang Fullstack Developer yang berbasis di Indonesia. Saya memiliki semangat yang tinggi dalam menerjemahkan desain UI/UX dan sistem webisite yang statis menjadi kode yang bersih, fungsional, dan hidup di layar perangkat Anda.
                 </p>
                 <p class="about-desc">
-                    Gaya favorit saya mencakup perpaduan <em>retro playful</em> dan <em>neo-brutalism</em> yang berani — menghadirkan kesan dinamis, bayangan tebal, dan warna-warna cerah yang membuat halaman web terasa tidak membosankan.
+                    <b>Nama:</b> Muhammad Ilham Rafi <br>
+                    <b>Nama Panggilan:</b> Ilham <br>
+                    <b>Spesialisasi (Role):</b> Fullstack Developer <br>
+                    <b>Keahlian utama: </b> HTML, CSS, Tailwind, Javascript, PHP, React.js<br>
+                    <b>Domisili: </b>Semarang, Indonesia <br>
                 </p>
                 <p class="about-desc">
-                    Selain menulis baris kode JavaScript, saya senang mengeksplorasi animasi mikro, memecahkan masalah tata letak yang rumit, dan memastikan setiap situs web yang saya bangun dapat diakses oleh semua orang dengan lancar.
+                    Perjalanan saya di dunia teknologi dimulai sejak saya menghabiskan 3 tahun mengasah keterampilan pengembangan perangkat lunak di SMKN 9 Semarang. Saya sangat menikmati proses menerjemahkan ide menjadi kode, mulai dari merakit UI/UX yang cantik dengan HTML, CSS, Tailwind, dan React.js, hingga membangun sistem back-end yang andal menggunakan PHP dan JavaScript.
                 </p>
             </div>
 
-            <!-- Kolom Kanan: Grid Keahlian -->
             <div class="about-skills-cards">
                 
                 <div class="skill-card pink">
                     <div class="skill-icon">🎨</div>
-                    <h3 class="skill-title">Frontend Dev</h3>
-                    <p class="skill-desc">Ahli dalam merakit layout interaktif dengan HTML semantik, CSS Modern (Flex/Grid), dan React.js.</p>
+                    <h3 class="skill-title">Fullstack Dev</h3>
+                    <p class="skill-desc">Ahli dalam merakit layout interaktif dengan HTML semantik, CSS Modern (Flex/Grid), PHP, JavaScript, dan React.js.</p>
                 </div>
                 
                 <div class="skill-card blue">
@@ -72,12 +82,22 @@
                 <div class="skill-card white">
                     <div class="skill-icon">🛠️</div>
                     <h3 class="skill-title">Modern Tooling</h3>
-                    <p class="skill-desc">Terbiasa bekerja menggunakan Git, Webpack, NPM, Tailwind, dan menerjemahkan mockup Figma.</p>
+                    <p class="skill-desc">Terbiasa bekerja menggunakan Git, Webpack, NPM, Tailwind, Laravel, XAMPP, dan phpmyadmin.</p>
                 </div>
 
             </div>
         </div>
     </main>
+
+    <script>
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const navLinks = document.getElementById('nav-links');
+
+        hamburgerBtn.addEventListener('click', () => {
+            hamburgerBtn.classList.toggle('active');
+            navLinks.classList.toggle('show-menu');
+        });
+    </script>
 
 </body>
 </html>

@@ -9,19 +9,28 @@
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="logo-section">
-            <div class="logo-icon">MI</div>
-            <span class="logo-text">Muhammad <b>Ilham</b> Rafi</span>
-        </div>
-        <ul class="nav-links">
-            <li><a href="#" class="active">Home</a></li>
-            <li><a href="about.html">About Me</a></li>
-            <li><a href="#">My Portfolio</a></li>
-            <li><a href="#">Testimonials</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
-    </nav>
+    <div class="navbar-container">
+        <nav class="navbar">
+            <div class="logo-section">
+                <div class="logo-icon">MI</div>
+                <span class="logo-text">Muhammad <b>Ilham</b> Rafi</span>
+            </div>
+            
+            <button class="hamburger" id="hamburger-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="about.html">About Me</a></li>
+                <li><a href="#">My Projects</a></li>
+                <li><a href="#"></a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
 
     <main class="hero-section">
         <div class="hero-text">
@@ -30,7 +39,7 @@
             <p class="description">
                 Lulusan SMK Pengembangan Perangkat Lunak dan Gim (PPLG) yang memiliki ketertarikan dan keahlian di bidang Full Stack Web Development.
             </p>
-            <a href="#" class="btn-start">Get Started <span class="arrow-icon">↗</span></a>
+            <a href="#" class="btn-start" id="btn-start">Get Started <span class="arrow-icon">↗</span></a>
         </div>
 
         <div class="hero-image">
@@ -42,21 +51,51 @@
                     <span class="dot"></span>
                 </div>
                 <div class="image-container">
-                    <!-- Gambar sudah diganti sesuai request -->
-                    <img src="asset/img/foto-profile-ilham.png" alt="Muhammad Ilham Rafi" class="profile-pic">
-                    <div class="badge">Frontend Developer</div>
+                    <img src="asset/img/foto-profile-ilham.png" alt="Muhammad Ilham Rafi" class="profile-pic" onerror="this.src='https://placehold.co/600x600/e0e0e0/4a4a4a?text=Ilham+Rafi'">
+                    <div class="badge">Fullstack Developer</div>
                 </div>
             </div>
-            <!-- Elemen Dekorasi Bintang -->
             <div class="star star-top-left">✦</div>
             <div class="star star-bottom-right">✦</div>
         </div>
     </main>
 
+    <div class="custom-alert-overlay" id="customAlert">
+        <div class="custom-alert-box">
+            <p>Mari mulai belajar Fullstack Development! 🚀</p>
+            <button id="closeAlertBtn">Oke, Siap!</button>
+        </div>
+    </div>
+
     <script>
-        document.querySelector('.btn-start').addEventListener('click', function(e) {
+        // Logika Hamburger Menu
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const navLinks = document.getElementById('nav-links');
+
+        hamburgerBtn.addEventListener('click', () => {
+            hamburgerBtn.classList.toggle('active');
+            navLinks.classList.toggle('show-menu');
+        });
+
+        // Logika Pengganti Alert()
+        const btnStart = document.getElementById('btn-start');
+        const customAlert = document.getElementById('customAlert');
+        const closeAlertBtn = document.getElementById('closeAlertBtn');
+
+        btnStart.addEventListener('click', function(e) {
             e.preventDefault();
-            alert('Mari mulai belajar Frontend Development!');
+            customAlert.style.display = 'flex';
+        });
+
+        closeAlertBtn.addEventListener('click', function() {
+            customAlert.style.display = 'none';
+        });
+
+        // Tutup alert saat mengklik di luar area kotak pesan
+        customAlert.addEventListener('click', function(e) {
+            if (e.target === customAlert) {
+                customAlert.style.display = 'none';
+            }
         });
     </script>
 </body>

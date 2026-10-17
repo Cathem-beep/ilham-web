@@ -23,24 +23,31 @@
             line-height: 1.6;
         }
 
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 5vw;
+        .navbar-container {
+            width: 100%;
             background: var(--bg-white);
-            flex-wrap: wrap; 
-            gap: 20px;
             border-bottom: 3px solid var(--dark-navy);
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5vw;
+            max-width: 1400px;
+            margin: 0 auto;
+            flex-wrap: wrap; 
+            gap: 20px;
+        }
+
         .logo-section {
             display: flex;
             align-items: center;
             gap: 10px;
+            z-index: 102;
         }
 
         .logo-icon {
@@ -53,7 +60,8 @@
             justify-content: center;
             align-items: center;
             border-radius: 50%;
-            border: 2px solid var(--dark-navy);
+            flex-shrink: 0;
+            border: 2px solid var(--dark-navy); /* Ditambahkan border pada about untuk konsistensi retro */
         }
 
         .logo-text {
@@ -61,12 +69,37 @@
             font-size: 1.1rem;
         }
 
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 102;
+            padding: 5px;
+        }
+        
+        .hamburger span {
+            display: block;
+            width: 30px;
+            height: 3px;
+            background-color: var(--dark-navy);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
         .nav-links {
             display: flex;
             list-style: none;
             gap: 2vw;
             flex-wrap: wrap;
             justify-content: center;
+            align-items: center;
         }
 
         .nav-links a {
@@ -74,7 +107,7 @@
             color: var(--dark-navy);
             font-weight: 700;
             opacity: 0.6;
-            transition: opacity 0.2s ease;
+            transition: opacity 0.2s ease, color 0.2s ease;
         }
         
         .nav-links a:hover {
@@ -94,7 +127,7 @@
         .about-section {
             padding: 80px 5vw 120px 5vw;
             position: relative;
-            max-width: 1400px;
+            max-width: 1400px; /* Batasan Zoom 25% */
             margin: 0 auto;
         }
 
@@ -104,12 +137,14 @@
             align-items: flex-start;
             gap: 60px;
             margin-top: 40px;
+            flex-wrap: wrap; /* Dukungan untuk Zoom 500% */
         }
 
         .about-text-content {
             flex: 1;
             position: relative;
             z-index: 2;
+            min-width: 280px; /* Cegah penyusutan ekstrem di zoom besar */
         }
 
         .section-tag {
@@ -127,11 +162,12 @@
         }
 
         .about-heading {
-            font-size: clamp(2.5rem, 4vw, 4rem);
+            font-size: clamp(2rem, 4vw, 4rem);
             font-weight: 800;
             line-height: 1.1;
             margin-bottom: 30px;
             color: var(--dark-navy);
+            word-wrap: break-word; /* Tangani kata panjang di 500% zoom */
         }
         
         .about-heading span {
@@ -140,7 +176,6 @@
             color: var(--primary-blue);
         }
         
-        /* Highlight marker under the text */
         .about-heading span::after {
             content: '';
             position: absolute;
@@ -155,7 +190,7 @@
         }
 
         .about-desc {
-            font-size: 1.1rem;
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
             color: var(--text-gray);
             line-height: 1.8;
             margin-bottom: 25px;
@@ -168,10 +203,12 @@
         .about-skills-cards {
             flex: 1;
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsif otomatis untuk zoom tinggi */
             gap: 25px;
             position: relative;
             z-index: 2;
+            min-width: 280px;
+            width: 100%;
         }
 
         .skill-card {
@@ -208,6 +245,7 @@
             align-items: center;
             font-size: 1.5rem;
             box-shadow: 3px 3px 0px var(--dark-navy);
+            flex-shrink: 0;
         }
 
         .skill-title {
@@ -226,32 +264,18 @@
         .decor-star {
             position: absolute;
             color: var(--accent-yellow);
-            font-size: clamp(60px, 8vw, 90px);
+            font-size: clamp(40px, 8vw, 90px);
             text-shadow: 2px 2px 0px var(--dark-navy), -1px -1px 0 var(--dark-navy), 1px -1px 0 var(--dark-navy), -1px 1px 0 var(--dark-navy), 1px 1px 0 var(--dark-navy);
             z-index: 1;
             animation: pulseStar 4s ease-in-out infinite alternate;
         }
 
-        .star-1 {
-            top: 20%;
-            left: 2%;
-            transform: rotate(15deg);
-        }
-
-        .star-2 {
-            bottom: 5%;
-            right: 5%;
-            font-size: clamp(80px, 10vw, 120px);
-            transform: rotate(-15deg);
-            animation-delay: 1s;
-        }
+        .star-1 { top: 10%; left: 2%; transform: rotate(15deg); }
+        .star-2 { bottom: 5%; right: 5%; font-size: clamp(60px, 10vw, 120px); transform: rotate(-15deg); animation-delay: 1s; }
 
         .bg-pattern {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             opacity: 0.03;
             background-image: radial-gradient(var(--dark-navy) 2px, transparent 2px);
             background-size: 30px 30px;
@@ -265,39 +289,36 @@
         }
 
         @media screen and (max-width: 992px) {
-            .about-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            .about-text-content {
-                text-align: center;
-            }
-            .section-tag {
-                transform: rotate(0deg);
-            }
-            .about-heading span::after {
-                transform: rotate(0deg);
-            }
-            .about-skills-cards {
-                width: 100%;
-            }
+            .about-container { flex-direction: column; align-items: center; }
+            .about-text-content { text-align: center; }
+            .section-tag { transform: rotate(0deg); }
+            .about-heading span::after { transform: rotate(0deg); }
         }
 
         @media screen and (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                text-align: center;
-                padding: 15px;
-            }
+            .navbar { padding: 15px 5vw; }
+            .hamburger { display: flex; }
+            
             .nav-links {
-                margin: 15px 0;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--bg-white);
                 flex-direction: column;
-                gap: 15px;
+                padding: 0;
+                max-height: 0;
+                overflow: hidden;
+                border-bottom: 0px solid var(--dark-navy);
+                transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
             }
-            .about-skills-cards {
-                grid-template-columns: 1fr;
+            
+            .nav-links.show-menu {
+                max-height: 400px;
+                padding: 20px 0;
+                border-bottom: 3px solid var(--dark-navy);
             }
-            .decor-star {
-                opacity: 0.3; /* Less distracting on small screens */
-            }
+            
+            .about-skills-cards { grid-template-columns: 1fr; }
+            .decor-star { opacity: 0.3; }
         }
