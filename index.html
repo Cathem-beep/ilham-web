@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammad Ilham Rafi - Frontend Developer</title>
+    <link rel="stylesheet" href="styles-index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo-section">
+            <div class="logo-icon">MI</div>
+            <span class="logo-text">Muhammad <b>Ilham</b> Rafi</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" class="active">Home</a></li>
+            <li><a href="about.html">About Me</a></li>
+            <li><a href="#">My Portfolio</a></li>
+            <li><a href="#">Testimonials</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main class="hero-section">
+        <div class="hero-text">
+            <h2 class="greeting">Hello world !</h2>
+            <h1 class="title">Saya Muhammad<br><u>Ilham</u> Rafi</h1>
+            <p class="description">
+                Lulusan SMK Pengembangan Perangkat Lunak dan Gim (PPLG) yang memiliki ketertarikan dan keahlian di bidang Full Stack Web Development.
+            </p>
+            <a href="#" class="btn-start">Get Started <span class="arrow-icon">↗</span></a>
+        </div>
+
+        <div class="hero-image">
+            <div class="blue-bg-shape"></div>
+            <div class="browser-window">
+                <div class="browser-header">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+                <div class="image-container">
+                    <!-- Gambar sudah diganti sesuai request -->
+                    <img src="asset/img/foto-profile-ilham.png" alt="Muhammad Ilham Rafi" class="profile-pic">
+                    <div class="badge">Frontend Developer</div>
+                </div>
+            </div>
+            <!-- Elemen Dekorasi Bintang -->
+            <div class="star star-top-left">✦</div>
+            <div class="star star-bottom-right">✦</div>
+        </div>
+    </main>
+
+    <script>
+        document.querySelector('.btn-start').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Mari mulai belajar Frontend Development!');
+        });
+    </script>
+</body>
+</html>
