@@ -216,7 +216,6 @@
             position: relative;
             background: #e0e0e0;
             border-radius: 0 0 10px 10px;
-            /* HAPUS baris overflow: hidden; di sini */
         }
 
         .profile-pic {
@@ -224,15 +223,10 @@
             height: auto;
             display: block;
             object-fit: cover;
-            filter: grayscale(100%);
-            transition: filter 0.3s;
             /* TAMBAHKAN baris ini agar sudut bawah foto tetap melengkung */
             border-radius: 0 0 10px 10px; 
         }
         
-        .image-container:hover .profile-pic {
-            filter: grayscale(0%);
-        }
 
         .badge {
             position: absolute;
