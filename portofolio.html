@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio - Muhammad Ilham Rafi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles-portofolio.css">
+</head>
+<body>
+
+    <div class="navbar-container">
+        <nav class="navbar">
+            <div class="logo-section">
+                <div class="logo-icon">MI</div>
+                <span class="logo-text">Muhammad <b>Ilham</b> Rafi</span>
+            </div>
+            
+            <button class="hamburger" id="hamburger-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Me</a></li>
+                <li><a href="portofolio.html" class="active">Portofolio</a></li>
+                <li><a href="certificates.html">Certificates</a></li>
+                <li><a href="activity.html">Activity</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <main class="portfolio-section">
+        <div class="bg-pattern"></div>
+        <div class="decor-star star-1">✦</div>
+        <div class="decor-star star-2">✦</div>
+
+        <div class="section-header">
+            <h1 class="portfolio-heading">PORTOFOLIO</h1>
+            <p class="portfolio-subtitle">Beberapa project unggulan yang telah saya kerjakan</p>
+        </div>
+
+        <div class="filter-container">
+            <button class="filter-btn active" data-filter="all">Semua</button>
+            <button class="filter-btn" data-filter="web">Web Development</button>
+        </div>
+
+        <div class="portfolio-grid" id="portfolio-grid">
+            
+            <!-- Card 1 -->
+            <div class="portfolio-card" data-category="web">
+                <div class="card-image-wrapper">
+                    <!-- Placeholder untuk gambar project -->
+                    <img src="asset/img/hasil-ycwc-1.jpeg" alt="Young Coder World Cup - Timedoor Academy" class="card-image">
+                </div>
+                <div class="card-content">
+                    <span class="card-tag">Web Development</span>
+                    <h3 class="card-title">AuraSynth — Lomba Young Coder World Cup dari Timedoor Academy</h3>
+                    <p class="card-desc">Saya membuat website Aurasynth berupa AI yang akan membuat portofolio website dengan cepat dan tanpa coding, serta masuk ke semifinal.</p>
+                    <a href="#" class="btn-detail">Lihat Detail <span>→</span></a>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="portfolio-card" data-category="web">
+                <div class="card-image-wrapper">
+                    <img src="https://placehold.co/600x400/0c1a4b/ffffff?text=Bank+Miska" alt="Bank Miska" class="card-image">
+                </div>
+                <div class="card-content">
+                    <span class="card-tag">Web Development</span>
+                    <h3 class="card-title">Bank Miska - Project Web Alur Kerja Keuangan Perbankan</h3>
+                    <p class="card-desc">Sebuah website yang bisa monitoring keuangan siswa seperti top up, tarik tunai, tap kartu RFID, dan cek saldo siswa dengan akurat.</p>
+                    <a href="#" class="btn-detail">Lihat Detail <span>→</span></a>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="portfolio-card" data-category="web">
+                <div class="card-image-wrapper">
+                    <img src="https://placehold.co/600x400/f7b731/0c1a4b?text=Skanilan+Tech" alt="Skanilan Tech" class="card-image">
+                </div>
+                <div class="card-content">
+                    <span class="card-tag">Web Development</span>
+                    <h3 class="card-title">Skanilan Tech - Project Web SMKN 9 Semarang Pusat Toko Online</h3>
+                    <p class="card-desc">Skanilan Tech adalah website berbasis toko online untuk membeli sebuah produk maupun jasa seseorang yang memiliki keahlian khusus.</p>
+                    <a href="#" class="btn-detail">Lihat Detail <span>→</span></a>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="portfolio-card" data-category="web">
+                <div class="card-image-wrapper">
+                    <img src="https://placehold.co/600x400/f4d9e1/0c1a4b?text=Ilham+Web" alt="Portofolio Ilham Web" class="card-image">
+                </div>
+                <div class="card-content">
+                    <span class="card-tag">Web Development</span>
+                    <h3 class="card-title">Ilham Web - Portofolio Muhammad Ilham Rafi Mengenai Informasi Keahlian</h3>
+                    <p class="card-desc">Portofolio Muhammad Ilham Rafi yang berisi informasi diri umum, keahlian, portofolio, sertifikat, activitas, dan kontak.</p>
+                    <a href="#" class="btn-detail">Lihat Detail <span>→</span></a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // Logika Hamburger Menu
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const navLinks = document.getElementById('nav-links');
+
+        hamburgerBtn.addEventListener('click', () => {
+            hamburgerBtn.classList.toggle('active');
+            navLinks.classList.toggle('show-menu');
+        });
+
+        // Logika Filter Portofolio
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const portfolioCards = document.querySelectorAll('.portfolio-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Hapus class active dari semua tombol
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // Tambahkan class active ke tombol yang diklik
+                btn.classList.add('active');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                // Filter logika
+                portfolioCards.forEach(card => {
+                    const cardCategory = card.getAttribute('data-category');
+                    
+                    if (filterValue === 'all' || filterValue === cardCategory) {
+                        card.classList.remove('hide');
+                        // Reset animasi dengan memicu reflow
+                        card.style.animation = 'none';
+                        card.offsetHeight; 
+                        card.style.animation = 'fadeIn 0.5s ease forwards';
+                    } else {
+                        card.classList.add('hide');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
