@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity - Muhammad Ilham Rafi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles-activity.css">
+</head>
+<body>
+
+    <!-- Navbar Section -->
+    <div class="navbar-container">
+        <nav class="navbar">
+            <div class="logo-section">
+                <div class="logo-icon">MI</div>
+                <span class="logo-text">Muhammad <b>Ilham</b> Rafi</span>
+            </div>
+            
+            <button class="hamburger" id="hamburger-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Me</a></li>
+                <li><a href="portofolio.html">Portofolio</a></li>
+                <li><a href="certificates.html">Certificates</a></li>
+                <li><a href="activity.html" class="active">Activity</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Activity Main Section -->
+    <main class="activity-section">
+        <div class="bg-pattern"></div>
+        <div class="decor-star star-1">✦</div>
+        <div class="decor-star star-2">✦</div>
+
+        <div class="section-header">
+            <h1 class="activity-heading">ACTIVITY</h1>
+            <p class="activity-subtitle">Dokumentasi kegiatan, kompetisi, dan pengalaman seru saya</p>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="filter-container">
+            <button class="filter-btn active" data-filter="all">Semua</button>
+            <button class="filter-btn" data-filter="kompetisi">Kompetisi</button>
+            <button class="filter-btn" data-filter="bootcamp">Bootcamp & Pelatihan</button>
+            <button class="filter-btn" data-filter="organisasi">Organisasi</button>
+        </div>
+
+        <!-- Activity Grid -->
+        <div class="activity-grid" id="activity-grid">
+            
+            <!-- Card 1 -->
+                <div class="activity-card" data-category="kompetisi">
+                <div class="card-image-wrapper">
+                    <!-- Placeholder untuk gambar project -->
+                    <img src="asset/img/hasil-ycwc-1.jpeg" alt="Young Coder World Cup - Timedoor Academy" class="card-image">
+                </div>
+                <div class="card-content">
+                    <span class="card-tag">Kompetisi</span>
+                    <h3 class="card-title">AuraSynth — Lomba Young Coder World Cup dari Timedoor Academy</h3>
+                    <p class="card-desc">Saya membuat website Aurasynth berupa AI yang akan membuat portofolio website dengan cepat dan tanpa coding, serta masuk ke semifinal.</p>
+                    <a href="#" class="btn-detail">Lihat Dokumentasi <span>→</span></a>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="activity-card" data-category="bootcamp">
+                <div class="card-image-wrapper">
+                    <img src="https://placehold.co/600x400/f4d9e1/0c1a4b?text=Bootcamp+React" alt="Bootcamp React" class="card-image">
+                </div>
+                <div class="card-content pink-theme">
+                    <span class="card-tag">Bootcamp & Pelatihan</span>
+                    <h3 class="card-title">Intensive Frontend Bootcamp - React.js</h3>
+                    <p class="card-desc">Mengikuti pelatihan intensif selama 2 bulan untuk memperdalam pemahaman tentang state management, hooks, dan ekosistem React.js.</p>
+                    <a href="#" class="btn-detail">Lihat Dokumentasi <span>→</span></a>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="activity-card" data-category="organisasi">
+                <div class="card-image-wrapper">
+                    <img src="https://placehold.co/600x400/f7b731/0c1a4b?text=OSIS+IT+Div" alt="Organisasi IT" class="card-image">
+                </div>
+                <div class="card-content yellow-theme">
+                    <span class="card-tag">Organisasi</span>
+                    <h3 class="card-title">Ketua Divisi IT & Publikasi - OSIS</h3>
+                    <p class="card-desc">Bertanggung jawab atas pengelolaan website sekolah, pembuatan desain konten sosial media, dan dokumentasi setiap acara sekolah.</p>
+                    <a href="#" class="btn-detail">Lihat Dokumentasi <span>→</span></a>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="activity-card" data-category="kompetisi">
+                <div class="card-image-wrapper">
+                    <img src="https://placehold.co/600x400/10b981/ffffff?text=Hackathon" alt="Hackathon" class="card-image">
+                </div>
+                <div class="card-content green-theme">
+                    <span class="card-tag">Kompetisi</span>
+                    <h3 class="card-title">Peserta Hackathon Nasional 48 Jam</h3>
+                    <p class="card-desc">Berpartisipasi dalam hackathon nasional bersama tim, membangun prototipe aplikasi solusi pendidikan interaktif dalam waktu 48 jam.</p>
+                    <a href="#" class="btn-detail">Lihat Dokumentasi <span>→</span></a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // Logika Hamburger Menu
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const navLinks = document.getElementById('nav-links');
+
+        hamburgerBtn.addEventListener('click', () => {
+            hamburgerBtn.classList.toggle('active');
+            navLinks.classList.toggle('show-menu');
+        });
+
+        // Logika Filter Activity
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const activityCards = document.querySelectorAll('.activity-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Hapus class active dari semua tombol
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // Tambahkan class active ke tombol yang diklik
+                btn.classList.add('active');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                // Filter logika animasi & display
+                activityCards.forEach(card => {
+                    const cardCategory = card.getAttribute('data-category');
+                    
+                    if (filterValue === 'all' || filterValue === cardCategory) {
+                        card.classList.remove('hide');
+                        // Reset animasi agar transisi berjalan tiap kali diklik
+                        card.style.animation = 'none';
+                        card.offsetHeight; 
+                        card.style.animation = 'fadeIn 0.5s ease forwards';
+                    } else {
+                        card.classList.add('hide');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
